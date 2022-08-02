@@ -85,7 +85,6 @@ public class Menu {
             default:
                 System.out.println("Wrong input");
                 return;
-
         }
 
         boolean menuLoop = true;
@@ -123,8 +122,6 @@ public class Menu {
                 System.exit(0);
                 break;
         }
-
-
     }
 
     boolean analyzeMenu() {

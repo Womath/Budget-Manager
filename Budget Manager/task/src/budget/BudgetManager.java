@@ -44,7 +44,7 @@ public class BudgetManager {
             purchases.put(s, price);
             balance -= price;
             System.out.println("Purchase was added!");
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Wrong input, purchase was not added");
         }
     }
@@ -124,7 +124,7 @@ public class BudgetManager {
         File file = new File("purchases.txt");
         Scanner scanner = new Scanner(file);
 
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             String s = scanner.nextLine();
             switch (s) {
                 case "--- BALANCE ---":
@@ -132,50 +132,42 @@ public class BudgetManager {
                     balance = Double.parseDouble(s);
                     break;
                 case "--- FOOD ---":
-                     while(true) {
+                    while (true) {
                         s = scanner.nextLine();
-                        if (!s.equals("---------")) {
-                            String[] data = s.split(" \\|\\| \\$");
-                            food.put(data[0], Double.parseDouble(data[1]));
-                            purchases.put(data[0], Double.parseDouble(data[1]));
-                        } else {
+                        if (s.equals("---------")) {
                             break;
+                        } else {
+                            addToList(s, food);
                         }
                     }
                     break;
                 case "--- CLOTHES ---":
                     while (true) {
                         s = scanner.nextLine();
-                        if (!s.equals("---------")) {
-                            String[] data = s.split(" \\|\\| \\$");
-                            clothes.put(data[0], Double.parseDouble(data[1]));
-                            purchases.put(data[0], Double.parseDouble(data[1]));
-                        } else {
+                        if (s.equals("---------")) {
                             break;
+                        } else {
+                            addToList(s, clothes);
                         }
                     }
                     break;
                 case "--- ENTERTAINMENT ---":
                     while (true) {
                         s = scanner.nextLine();
-                        if (!s.equals("---------")) {
-                            String[] data = s.split(" \\|\\| \\$");
-                            entertainment.put(data[0], Double.parseDouble(data[1]));
-                            purchases.put(data[0], Double.parseDouble(data[1]));
-                        } else {
+                        if (s.equals("---------")) {
                             break;
+                        } else {
+                            addToList(s, entertainment);
                         }
                     }
                     break;
                 case "--- OTHERS ---":
                     while (true) {
                         s = scanner.nextLine();
-                        if (!s.equals("---------")) {
-                            String[] data = s.split(" \\|\\| \\$");
-                            others.put(data[0], Double.parseDouble(data[1]));
-                            purchases.put(data[0], Double.parseDouble(data[1]));
-                        } else {
+                        if (s.equals("---------")) {
                             break;
+                        } else {
+                            addToList(s, others);
                         }
                     }
                     break;
@@ -186,8 +178,14 @@ public class BudgetManager {
         System.out.println("\nPurchases were loaded!");
     }
 
+    void addToList(String s, Map<String, Double> map) {
+        String[] data = s.split(" \\|\\| \\$");
+        map.put(data[0], Double.parseDouble(data[1]));
+        purchases.put(data[0], Double.parseDouble(data[1]));
+    }
+
     public void analyzeAllPurchases() {
-        if(purchases.size() > 0) {
+        if (purchases.size() > 0) {
             QuickSort sort = new QuickSort(purchases);
             sort.quicksort(0, sort.prices.size() - 1);
             double total = 0;
@@ -205,7 +203,7 @@ public class BudgetManager {
     }
 
     public void analyzeCertain(Map<String, Double> map, String type) {
-        if(map.size() > 0) {
+        if (map.size() > 0) {
             QuickSort sort = new QuickSort(map);
             sort.quicksort(0, sort.prices.size() - 1);
             double total = 0;
@@ -261,4 +259,4 @@ public class BudgetManager {
         }
         System.out.println("Total sum: $" + String.format("%,.2f", total));
     }
- }
+}
